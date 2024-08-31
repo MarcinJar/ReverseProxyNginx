@@ -31,7 +31,7 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # Nginx config or logs (adjust the paths according to your setup)
-nginx.conf
+# nginx.conf
 logs/
 error.log
 access.log

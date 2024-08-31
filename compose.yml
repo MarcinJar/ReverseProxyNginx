@@ -1,15 +1,30 @@
 name: nginx-proxy
 services:
-  customer:
+  customer-api:
     build:
       context: ./CustomerApi  
       dockerfile: Dockerfile 
-    container_name: customer   
-    ports:
-      - "5000:80"
+    container_name: customer-api   
+    expose:
+      - "80"  # Exposes port 80 inside the container
     command: ["dotnet", "CustomerApi.dll"]
     stdin_open: true 
     tty: true      
+    networks:
+      - laboratory-nginx
+
+  nginx:
+    image: mynginx:latest
+    container_name: nginx
+    build:
+      context: ./NginxProxy
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - customer-api
+    stdin_open: true 
+    tty: true 
     networks:
       - laboratory-nginx
 
